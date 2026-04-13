@@ -5,52 +5,131 @@
     <title>Мой сайт</title>
 </head>
 
-<body style="margin:0; font-family:Arial; background: linear-gradient(120deg, #74ebd5, #acb6e5); color:#222;">
+<body id="body" style="margin:0; font-family:Arial; background: linear-gradient(120deg, #74ebd5, #acb6e5); color:#222; transition:0.3s;">
 
-    <div style="text-align:center; padding:40px;">
-        <h1>Добро пожаловать на мой сайт</h1>
-        <p>Сайт с аналитикой и счётчиком</p>
+<div style="text-align:center; padding:40px;">
+    <h1>Добро пожаловать на мой сайт</h1>
+    <p>Сайт с аналитикой и функционалом</p>
 
-        <button onclick="alert('Привет!')" 
-                style="padding:10px 20px; border:none; border-radius:10px; background:#ff6b6b; color:white;">
-            Нажми меня
-        </button>
-    </div>
+    <button onclick="handleClick()" 
+        style="padding:10px 20px; border:none; border-radius:10px; background:#ff6b6b; color:white;">
+        Нажми меня
+    </button>
 
-    <hr>
+    <p id="counter">Кликов: 0</p>
 
-    <div style="text-align:center;">
-        <h2>Полезные ссылки</h2>
+    <button onclick="toggleTheme()" style="margin-top:10px; padding:8px 15px;">
+        Переключить тему
+    </button>
 
-        <a href="https://github.com" target="_blank">GitHub</a> |
-        <a href="https://www.google.com" target="_blank">Google</a>
-    </div>
+    <p id="clock"></p>
+</div>
 
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {
-                if (document.scripts[j].src === r) { return; }
-            }
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k,a)
-        })
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=108310001", "ym");
+<hr>
 
-        ym(108310001, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true
+<div style="text-align:center;">
+    <h2>Заметки</h2>
+    <input id="noteInput" placeholder="Введите заметку">
+    <button onclick="addNote()">Добавить</button>
+
+    <ul id="notesList"></ul>
+</div>
+
+<hr>
+
+<div style="text-align:center;">
+    <h2>Полезные ссылки</h2>
+
+    <a href="https://github.com" target="_blank">GitHub</a> |
+    <a href="https://www.google.com" target="_blank">Google</a>
+</div>
+
+<script>
+    // ===== КЛИКИ =====
+    let clicks = localStorage.getItem("clicks") || 0;
+    document.getElementById("counter").innerText = "Кликов: " + clicks;
+
+    function handleClick() {
+        clicks++;
+        localStorage.setItem("clicks", clicks);
+        document.getElementById("counter").innerText = "Кликов: " + clicks;
+        alert("Привет!");
+    }
+
+    // ===== ТЕМА =====
+    function toggleTheme() {
+        const body = document.getElementById("body");
+        if (body.style.background.includes("74ebd5")) {
+            body.style.background = "#111";
+            body.style.color = "white";
+        } else {
+            body.style.background = "linear-gradient(120deg, #74ebd5, #acb6e5)";
+            body.style.color = "#222";
+        }
+    }
+
+    // ===== ЧАСЫ =====
+    function updateClock() {
+        const now = new Date();
+        document.getElementById("clock").innerText =
+            "Время: " + now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ===== ЗАМЕТКИ =====
+    let notes = JSON.parse(localStorage.getItem("notes") || "[]");
+
+    function renderNotes() {
+        const list = document.getElementById("notesList");
+        list.innerHTML = "";
+        notes.forEach((n, i) => {
+            const li = document.createElement("li");
+            li.innerHTML = n + ' <button onclick="deleteNote(' + i + ')">❌</button>';
+            list.appendChild(li);
         });
-    </script>
+    }
 
-    <noscript>
-        <div>
-            <img src="https://mc.yandex.ru/watch/108310001"
-                 style="position:absolute; left:-9999px;" alt="" />
-        </div>
-    </noscript>
+    function addNote() {
+        const input = document.getElementById("noteInput");
+        if (input.value.trim() === "") return;
+
+        notes.push(input.value);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        input.value = "";
+        renderNotes();
+    }
+
+    function deleteNote(i) {
+        notes.splice(i, 1);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        renderNotes();
+    }
+
+    renderNotes();
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        k=e.createElement(t), a=e.getElementsByTagName(t)[0], k.async=1, k.src=r, a.parentNode.insertBefore(k,a)
+    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=108310001", "ym");
+
+    ym(108310001, "init", {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true
+    });
+</script>
+
+<noscript>
+    <div>
+        <img src="https://mc.yandex.ru/watch/108310001"
+             style="position:absolute; left:-9999px;" alt="" />
+    </div>
+</noscript>
 
 </body>
 </html>
