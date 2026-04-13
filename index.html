@@ -2,56 +2,55 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой простой сайт</title>
+    <title>Мой сайт</title>
 </head>
 
 <body style="margin:0; font-family:Arial; background: linear-gradient(120deg, #74ebd5, #acb6e5); color:#222;">
 
     <div style="text-align:center; padding:40px;">
         <h1>Добро пожаловать на мой сайт</h1>
-        <p>Это простой сайт, сделанный только на HTML</p>
+        <p>Сайт с аналитикой и счётчиком</p>
 
-        <button onclick="alert('Привет! Это кнопка 😊')" 
-                style="padding:10px 20px; margin:10px; border:none; border-radius:10px; cursor:pointer; background:#ff6b6b; color:white;">
+        <button onclick="alert('Привет!')" 
+                style="padding:10px 20px; border:none; border-radius:10px; background:#ff6b6b; color:white;">
             Нажми меня
-        </button>
-
-        <button onclick="window.location.href='https://www.google.com'" 
-                style="padding:10px 20px; margin:10px; border:none; border-radius:10px; cursor:pointer; background:#4dabf7; color:white;">
-            Перейти в Google
         </button>
     </div>
 
     <hr>
 
     <div style="text-align:center;">
-        <h2>Картинки из интернета</h2>
-
-        <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d"
-             width="300" style="border-radius:15px; margin:10px;">
-
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
-             width="300" style="border-radius:15px; margin:10px;">
-
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-             width="300" style="border-radius:15px; margin:10px;">
-    </div>
-
-    <hr>
-
-    <div style="text-align:center; padding:20px;">
         <h2>Полезные ссылки</h2>
 
-        <p>
-            <a href="https://github.com" target="_blank">GitHub</a> |
-            <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> |
-            <a href="https://www.youtube.com" target="_blank">YouTube</a>
-        </p>
+        <a href="https://github.com" target="_blank">GitHub</a> |
+        <a href="https://www.google.com" target="_blank">Google</a>
     </div>
 
-    <footer style="text-align:center; padding:20px; background:rgba(0,0,0,0.2);">
-        <p>© 2026 Мой простой HTML сайт</p>
-    </footer>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { return; }
+            }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k,a)
+        })
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=108310001", "ym");
+
+        ym(108310001, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
+        });
+    </script>
+
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/108310001"
+                 style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
 
 </body>
 </html>
