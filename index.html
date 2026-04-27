@@ -2,134 +2,160 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой сайт</title>
+    <title>Тест Метрики</title>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { return; }
+            }
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+            k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108513303','ym');
+
+        ym(108513303, 'init', {
+            ssr:true,
+            webvisor:true,
+            clickmap:true,
+            ecommerce:"dataLayer",
+            referrer: document.referrer,
+            url: location.href,
+            accurateTrackBounce:true,
+            trackLinks:true
+        });
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/108513303" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(120deg, #74ebd5, #acb6e5);
+            transition: 0.3s;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .dark {
+            background: #111;
+            color: white;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 300px;
+        }
+    </style>
 </head>
 
-<body id="body" style="margin:0; font-family:Arial; background: linear-gradient(120deg, #74ebd5, #acb6e5); color:#222; transition:0.3s;">
+<body id="body">
 
-<div style="text-align:center; padding:40px;">
-    <h1>Добро пожаловать на мой сайт</h1>
-    <p>Сайт с аналитикой и функционалом</p>
+<div class="container">
+    <h1>Тестовая страница</h1>
+    <p>Проверка работы метрики</p>
 
-    <button onclick="handleClick()" 
-        style="padding:10px 20px; border:none; border-radius:10px; background:#ff6b6b; color:white;">
-        Нажми меня
-    </button>
+    <!-- КЛИКИ -->
+    <div class="card">
+        <h3>Клики</h3>
+        <button onclick="clickMe()">Кликни</button>
+        <p id="clickCount">0</p>
+    </div>
 
-    <p id="counter">Кликов: 0</p>
+    <!-- ТУМБЛЕР -->
+    <div class="card">
+        <h3>Тема</h3>
+        <button onclick="toggleTheme()">Переключить тему</button>
+    </div>
 
-    <button onclick="toggleTheme()" style="margin-top:10px; padding:8px 15px;">
-        Переключить тему
-    </button>
+    <!-- INPUT -->
+    <div class="card">
+        <h3>Поле ввода</h3>
+        <input id="input" placeholder="Напиши что-нибудь">
+        <button onclick="saveText()">Сохранить</button>
+        <p id="savedText"></p>
+    </div>
 
-    <p id="clock"></p>
-</div>
+    <!-- CHECKBOX -->
+    <div class="card">
+        <h3>Чекбокс</h3>
+        <label>
+            <input type="checkbox" onchange="toggleCheck(this)">
+            Согласен
+        </label>
+        <p id="checkStatus">Не выбран</p>
+    </div>
 
-<hr>
+    <!-- SELECT -->
+    <div class="card">
+        <h3>Выбор</h3>
+        <select onchange="selectOption(this)">
+            <option>JS</option>
+            <option>React</option>
+            <option>Next.js</option>
+        </select>
+        <p id="selected"></p>
+    </div>
 
-<div style="text-align:center;">
-    <h2>Заметки</h2>
-    <input id="noteInput" placeholder="Введите заметку">
-    <button onclick="addNote()">Добавить</button>
+    <!-- ССЫЛКИ -->
+    <div class="card">
+        <h3>Ссылки</h3>
+        <a href="https://github.com" target="_blank">GitHub</a><br>
+        <a href="https://google.com" target="_blank">Google</a>
+    </div>
 
-    <ul id="notesList"></ul>
-</div>
+    <!-- СКРОЛЛ -->
+    <div class="card" style="height:150px; overflow:auto;">
+        <p>Скролль меня 👇</p>
+        <div style="height:600px;"></div>
+    </div>
 
-<hr>
-
-<div style="text-align:center;">
-    <h2>Полезные ссылки</h2>
-
-    <a href="https://github.com" target="_blank">GitHub</a> |
-    <a href="https://www.google.com" target="_blank">Google</a>
 </div>
 
 <script>
-    // ===== КЛИКИ =====
-    let clicks = localStorage.getItem("clicks") || 0;
-    document.getElementById("counter").innerText = "Кликов: " + clicks;
+    let clicks = 0;
 
-    function handleClick() {
+    function clickMe() {
         clicks++;
-        localStorage.setItem("clicks", clicks);
-        document.getElementById("counter").innerText = "Кликов: " + clicks;
-        alert("Привет!");
+        document.getElementById("clickCount").innerText = clicks;
     }
 
-    // ===== ТЕМА =====
     function toggleTheme() {
-        const body = document.getElementById("body");
-        if (body.style.background.includes("74ebd5")) {
-            body.style.background = "#111";
-            body.style.color = "white";
-        } else {
-            body.style.background = "linear-gradient(120deg, #74ebd5, #acb6e5)";
-            body.style.color = "#222";
-        }
+        document.getElementById("body").classList.toggle("dark");
     }
 
-    // ===== ЧАСЫ =====
-    function updateClock() {
-        const now = new Date();
-        document.getElementById("clock").innerText =
-            "Время: " + now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ===== ЗАМЕТКИ =====
-    let notes = JSON.parse(localStorage.getItem("notes") || "[]");
-
-    function renderNotes() {
-        const list = document.getElementById("notesList");
-        list.innerHTML = "";
-        notes.forEach((n, i) => {
-            const li = document.createElement("li");
-            li.innerHTML = n + ' <button onclick="deleteNote(' + i + ')">❌</button>';
-            list.appendChild(li);
-        });
+    function saveText() {
+        const val = document.getElementById("input").value;
+        document.getElementById("savedText").innerText = val;
     }
 
-    function addNote() {
-        const input = document.getElementById("noteInput");
-        if (input.value.trim() === "") return;
-
-        notes.push(input.value);
-        localStorage.setItem("notes", JSON.stringify(notes));
-        input.value = "";
-        renderNotes();
+    function toggleCheck(el) {
+        document.getElementById("checkStatus").innerText =
+            el.checked ? "Выбран" : "Не выбран";
     }
 
-    function deleteNote(i) {
-        notes.splice(i, 1);
-        localStorage.setItem("notes", JSON.stringify(notes));
-        renderNotes();
+    function selectOption(el) {
+        document.getElementById("selected").innerText =
+            "Выбрано: " + el.value;
     }
-
-    renderNotes();
 </script>
-
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        k=e.createElement(t), a=e.getElementsByTagName(t)[0], k.async=1, k.src=r, a.parentNode.insertBefore(k,a)
-    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=108310001", "ym");
-
-    ym(108310001, "init", {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true
-    });
-</script>
-
-<noscript>
-    <div>
-        <img src="https://mc.yandex.ru/watch/108310001"
-             style="position:absolute; left:-9999px;" alt="" />
-    </div>
-</noscript>
 
 </body>
 </html>
